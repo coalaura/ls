@@ -41,6 +41,10 @@ func (t *FileTable) Process() error {
 		files []File
 	)
 
+	if _, err := os.Stat(t.path); os.IsNotExist(err) {
+		t.path += "*"
+	}
+
 	if strings.Contains(t.path, "*") {
 		glob, err := filepath.Glob(t.path)
 		if err != nil {
